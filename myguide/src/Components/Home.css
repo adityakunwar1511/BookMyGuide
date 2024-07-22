@@ -1,0 +1,26 @@
+
+@keyframes slideshow {
+    0% {
+      background-image: url("C:\Users\HP\OneDrive\Desktop\project\myguide\src\Components\Images\Goldentemple.jpg");
+    }
+    18% {
+        background-image: url("C:\Users\HP\OneDrive\Desktop\project\myguide\src\Components\Images\Mahakal.jpg");
+      }
+      36% {
+        background-image: url("C:\Users\HP\OneDrive\Desktop\project\myguide\src\Components\Images\Konarktemple.jpg");
+      }
+      54% {
+        background-image: url("C:\Users\HP\OneDrive\Desktop\project\myguide\src\Components\Images\Varanasi.jpg");
+      }
+      72% {
+        background-image: url("C:\Users\HP\OneDrive\Desktop\project\myguide\src\Components\Images\Jamamasjid.jpg");
+      }
+      100% {
+        background-image: url("C:\Users\HP\OneDrive\Desktop\project\myguide\src\Components\Images\Northeast.jpg");
+      }
+      
+  }
+  
+  .hero {
+    animation: slideshow 18s infinite;
+  } 
