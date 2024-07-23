@@ -66,7 +66,7 @@ app.post('/testing', async (req, res) => {
     const db=client.db(dbname)
     const collection=db.collection('documents')
     const user= await collection.findOne({email: password.email})
-    console.log(user)
+    //console.log(user)
     if(!user){
         const finalresult= await collection.insertOne(password)
         res.json("registered successfully")
@@ -99,8 +99,8 @@ app.post('/testing', async (req, res) => {
 
 
 app.post('/guideregister', async (req, res) => {
-    const data=req.body
-    
+    const data=req.body 
+     
     const db=client.db(dbname)
     const collection=db.collection('documents')
     const temp= await collection.findOne({email: data.email})
@@ -147,6 +147,13 @@ app.get('/logout',(req,res)=>{
 res.clearCookie('token');
 res.json({status:true})
 })
+
+app.post('/book',(req,res)=>{
+
+})
+
+
+
 
 // Start the server
 app.listen(port, () => {

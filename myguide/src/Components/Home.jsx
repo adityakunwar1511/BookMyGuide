@@ -82,7 +82,7 @@ const Header = () => {
         <div className="text-white text-lg p-1 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">BookMyGuide</div>
         <nav className='items-center justify-center '>
           <ul className="flex space-x-2 text-white">
-            <li><a href="#home" className="hover:text-black hover:font-bold p-1 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] hover:bg-blue-100 rounded-lg ">Home</a></li>
+            <li><a href="#home" className="hover:text-black hover:font-bold p-1 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] underline hover:bg-blue-100 rounded-lg ">Home</a></li>
             <li><a href="#destinations" className="hover:text-black hover:font-bold font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]  hover:bg-blue-100 rounded-lg p-1">Destinations</a></li>
             <li><button className="justify-center rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]" onClick={handleLogout}>Logout</button></li>
           </ul>
@@ -113,10 +113,11 @@ const Hero = () => {
     if(formData.location==''){
       toast.warn('Search location cannot be empty!', {
         position: "top-center",
-        autoClose: 5000,
+        
+        autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
         theme: "dark",
@@ -125,9 +126,21 @@ const Hero = () => {
     else{
     axios.post("http://localhost:3000/search",formData)
     .then(res=>{
-      
+      console.log((res.data))
+      if(res.data.length==0){
+        toast.warn('No guide found for your search!', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }else{
       navigate('/searchresult',{ state: { results: res.data } })
-      console.log(res.data);
+      console.log(res.data);}
     })
     .catch(err=>console.log("search m error",err))
     }
