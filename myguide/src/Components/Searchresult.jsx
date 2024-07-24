@@ -7,13 +7,14 @@ import './Searchresult.css'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Link } from 'react-router-dom';
 
 const Searchresult = () => {
   const location = useLocation();
   let { results } = location.state || {};
+  let { userdata } = location.state || {};
   var temp=results
-  console.log("res=",results)
+  // console.log("res=",results)
   const [myVariable, setMyVariable] = useState(temp);
   useEffect(() => {
     // Code to run when myVariable changes  
@@ -23,6 +24,9 @@ const Searchresult = () => {
   const [formData, setFormData] = useState({
     location:""
   });
+  
+  const [popup,setpopup]=useState(false)
+  
 
   const onChangeHandler = (e) => {
     const { name,value } = e.target;
@@ -72,7 +76,7 @@ const Searchresult = () => {
     }
   };
   const handleBack=()=>{
-    navigate('/home')
+    navigate('/home',{ state: { userdata: userdata } })
   }
   const handleLogout=()=>{
     // Cookies.remove('token');
@@ -84,15 +88,38 @@ const Searchresult = () => {
      })
      .catch(err=>console.log("error logging out! ",err))
    }
-   const handleSelect=(e)=>{
-    //console.log(e)
-    axios.post("http://localhost:3000/",formData)
-   }
+
+  const [date,setdate]=useState({date:""});
+ 
+  const handledatechange = (e) => {
+    const { name,value } = e.target;
+    setdate({ ...date, [name]: value });
+   
+  };
+   const handleSelect=async(e)=>{
+   console.log(userdata,"user and guide data",e,"date is",date) 
+   
+    await axios.post("http://localhost:3000/book",{e,userdata,date})
+    .then(res=>{
+        console.log("i am updated user data",res.data)
+        navigate('/profile',{ state: { customerdata: res.data } })
+       
+    })
+    .catch(err=>console.log("error booking! ",err))
+  }
+
+  
+  
+     //navigate('/profile',{ state: { userdata: userdata } })
+   
   return (
     <div >
+    
       <nav className='flex sm:justify-around bg-blue-500 items-center relative justify-around'>
       <svg type="submit" onClick={handleBack} className='bg-blue-700 hover:bg-indigo-400 p-1.5 absolute rounded-lg hover:cursor-pointer left-2' height="30px" viewBox="0 -960 960 960" width="30px" fill="#e8eaed"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
-      <div className="sm:text-white max-sm:hidden sm:text-lg sm:p-1 sm:font-extrabold sm:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">BookMyGuide</div>
+      <div className="sm:text-white max-sm:hidden sm:text-lg sm:p-1 sm:font-extrabold sm:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] flex max-sm:font-normal"><svg className='w-6 h-6' viewBox="0 0 384 512">
+  <path fill="red" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+</svg>BookMyGuide</div>
       <form onSubmit={submitHandler} className="w-[45%] sm:w-[35%] p-2"> 
       <div className='flex  gap-0.5 sm:gap-2'>
       <input
@@ -112,20 +139,40 @@ const Searchresult = () => {
     </div>
   </form>
       </nav>
-    
+    <div className='flex justify-center gap-1 p-2 bg-blue-200'>
+      <form >
+       <label className='font-semibold flex gap-2'>
+        Set Date: 
+        <input type="date" className='w-[120px] rounded-lg' value={date.date} onChange={handledatechange} name="date"/>
+       </label>
+      </form>
+      {date.date.length==0?(
+      <div className='text-sm text-red-500 gap-1 flex items-center'><svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12" y2="17"/>
+    </svg>no date choosen</div>):(<div className='text-white flex items-center'><svg className="w-5 rounded-full h-5 bg-green-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+    </svg><p className='text-black'>Date:{date.date}</p></div>)}
+    </div>
       <div className='h-[85vh] bg-blue-100  justify-center items-center'>
         <div className='items-center justify-center flex '>{myVariable ?(<p>Found {myVariable.length} guides for {myVariable[0].location}</p>):(<p></p>)} </div>
     <section className=' sm:w-[45vw]  m-auto h- bg-cover backg mt-2 rounded-lg p-1'>
     {myVariable && myVariable.length > 0 ? (
       <ul className='flex flex-col p-1.5 gap-1.5 opacity-100 rounded-lg '>
       {myVariable.map((result) => (
-            <li className='font-semibold border-black border bg-slate-100 rounded-lg p-2 flex relative' key={result.email}>
+            <li className='font-semibold border-black border bg-slate-100 rounded-lg p-2 flex relative' key={result._id}>
             <div>  <p>Name: {result.name}</p>
               <p>Email: {result.email}</p>
               <p>Language: {result.language}</p>
               <p>Location: {result.location}</p>
               <p>Hourly Rate: {`\u20B9`} {result.rate}</p></div>
-             <div className='absolute right-1'> <button onClick={()=>handleSelect(result)} className='bg-blue-600 hover:bg-indigo-400 p-1 text-white rounded-lg'>Select</button></div>
+             {date.date.length==0?(<div className='absolute right-1 text-sm bg-yellow-100 rounded-lg p-1 text-yellow-800'><svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12" y2="17"/>
+    </svg>Please set date</div>):( 
+             <div className='absolute right-1'> <button onClick={()=>handleSelect(result)} className='bg-blue-600 hover:bg-indigo-400 p-1 text-white rounded-lg'>Select</button></div>)}
             </li>))}
       </ul>):(<p className='font-semibold'>No guides found for your search location</p>)}
     </section>
@@ -133,11 +180,11 @@ const Searchresult = () => {
 <footer className="bg-blue-500 text-white py-4 fixed bottom-0 w-[100%]">
       <div className="container mx-auto text-center">
         <p>&copy; 2024 BookMyGuide. All rights reserved.</p>
+        <p>Contact: support@bookmyguide.com</p>
         <nav className="flex justify-center space-x-4 mt-2">
-          <a href="#home" className="hover:underline">Home</a>
-          <a href="#destinations" className="hover:underline">Destinations</a>
-          <a href="#about" className="hover:underline">About Us</a>
-          <a href="#contact" className="hover:underline">Contact</a>
+        
+          <a href="https://www.linkedin.com/in/aditya-kunwar-809554201/" target="_blank" className="hover:underline">About </a>
+          
         </nav>
       </div>
     </footer>

@@ -7,6 +7,7 @@ import Signup from './Components/Signup'
 import Guideregister from './Components/Guideregister'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import Searchresult from './Components/Searchresult'
+import Myprofile from './Components/Myprofile'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
       <Route path='/home' element={<Home/>}></Route>
       <Route path='/guideregister' element={<Guideregister/>}></Route>
       <Route path='/searchresult' element={<Searchresult/>}></Route>
+      <Route path='/profile' element={<Myprofile/>}></Route>
     </Routes>   
     </BrowserRouter>
    

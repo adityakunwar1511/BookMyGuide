@@ -24,9 +24,10 @@ const Login = () => {
     // Add your form submission logic here, such as sending data to a server
     axios.post('http://localhost:3000/login', formData)
     .then((response) => {
-      console.log(response);
-      if(response.data=="success"){
-        navigate('/home')
+     // console.log(response.data.user,"response");
+      if(response.data.user){
+     
+        navigate('/home',{ state: { userdata: response.data.user } })
         
       }
       else{
@@ -48,12 +49,15 @@ const Login = () => {
     });
   };
   return (
-    <div>
-          <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className='flex justify-center'>
+          <div className="flex min-h-full flex-col justify-center p-4 items-center max-w-[300px] rounded-2xl px-6 mt-10 bg-slate-300">
+          <div className="text-white justify-center items-center  text-lg p-1 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] flex "><svg className='w-6 h-6' viewBox="0 0 384 512">
+  <path fill="red" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+</svg>BookMyGuide</div>
   <div className="sm:mx-auto sm:w-full sm:max-w-sm">
    
   
-    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login to your account</h2>
+    <h2 className="mt-1 text-center text-xl font-bold leading-9 tracking-tight text-gray-700">Login to your account</h2>
   </div>
 
   <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

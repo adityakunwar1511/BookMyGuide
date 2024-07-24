@@ -13,6 +13,7 @@ const Guideregister = () => {
     location:'',
     rate:'',
     password: '',
+   
   });
   
   const onChangeHandler = (e) => {
@@ -57,10 +58,13 @@ const Guideregister = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center max-w-[320px] m-auto mt-4 px-6 rounded-xl bg-slate-300 py-12 lg:px-8">
+      <div className="text-white justify-center items-center  text-lg p-1 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] flex "><svg className='w-6 h-6' viewBox="0 0 384 512">
+  <path fill="red" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+</svg>BookMyGuide</div>
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
      
-      <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Guide Registration</h1>
+      <h1 className="mt-2 text-center text-xl font-bold leading-9 tracking-tight text-gray-700">Guide Registration</h1>
       <form onSubmit={submitHandler} className="space-y-6">
         <div className="mb-3">
           <label htmlFor="exampleInputName1" className="block text-sm font-medium leading-6 text-gray-900">

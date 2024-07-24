@@ -44,11 +44,12 @@ app.post('/login', async(req,res)=>{
     const collection=db.collection('documents')
     const finalresult= await collection.findOne({email: email})
     .then(user=>{
+        //console.log(user)
         if(user){
             if(user.password==password){
                const token=jwt.sign({email: user.email},"jwt-token-secret-key",{expiresIn:'10m'})
                res.cookie('token',token,{httpOnly:true,maxAge:600000}) //httpsOnly - true -js cannot access token
-               return res.json("success")
+               return res.json({user})
               
             }else{
                 res.json("incorrect password")
@@ -100,7 +101,7 @@ app.post('/testing', async (req, res) => {
 
 app.post('/guideregister', async (req, res) => {
     const data=req.body 
-     
+
     const db=client.db(dbname)
     const collection=db.collection('documents')
     const temp= await collection.findOne({email: data.email})
@@ -148,12 +149,86 @@ res.clearCookie('token');
 res.json({status:true})
 })
 
-app.post('/book',(req,res)=>{
 
+app.post('/book',async(req,res)=>{
+    const data=req.body 
+   // console.log(data)  
+   const guide=data.e;
+   const customer=data.userdata
+   const date=data.date
+   //console.log(date.date)  
+    const db=client.db(dbname)
+    const collection=db.collection('documents')
+    const temp= await collection.findOne({email: guide.email})
+    //console.log(temp.booking,"tam temP")
+    let finalresult,finalresult1;
+    if(temp.customers==undefined){
+        
+         finalresult= await collection.updateOne(
+            { email: temp.email },
+            { $set: { "customers": [{"email": customer.email, "name":customer.name ,"payment":"pending","date":date.date }]} }
+          )       
+    }
+    else{
+       
+         finalresult= await collection.updateOne(
+            { email: temp.email },
+            { $addToSet: { customers: {"email": customer.email, "name":customer.name ,"payment":"pending","date":date.date }} }
+          ) 
+    }
+    const tempc= await collection.findOne({email: customer.email})
+    if(tempc.bookings==undefined){
+         finalresult1= await collection.updateOne(
+            { email: tempc.email },
+            { $set: { "bookings": [{"email": guide.email, "name":guide.name,"date":date.date  ,"location":guide.location,"rate":guide.rate,"payment":"pending"}]} }
+          )       
+    }
+    else{
+      
+         finalresult1= await collection.updateOne(
+            { email: tempc.email },
+            { $addToSet: { bookings: {"email": guide.email, "name":guide.name,"date":date.date  ,"location":guide.location,"rate":guide.rate,"payment":"pending"}} }
+          ) 
+    }
+    const customerdata= await collection.findOne({email: customer.email})
+   // console.log(customerdata) 
+    res.send(customerdata) 
 })
 
+//mark as done
+
+app.post('/delete',async(req,res)=>{
+    const {e,profiledata}=req.body
+   // console.log(e.email,"sapce",profiledata)
+    const db=client.db(dbname)
+    const collection=db.collection('documents')
+   
+   const finalresult1= await collection.updateOne(
+        { email: profiledata.email },
+        { $pull: { customers: {email: e.email}} }
+      ) 
+      const temp= await collection.findOne({email: e.email})
+      // console.log("temp ",temp)
+    const  finalresult= await collection.updateOne(
+        { email: temp.email },
+        { $pull: { bookings: {email: profiledata.email }} }
+      ) 
 
 
+       await collection.updateOne(
+        { email: e.email },
+        { $pull: { customers: {email: profiledata.email}} }
+      ) 
+      
+      // console.log("temp ",temp)
+     await collection.updateOne(
+        { email: profiledata.email },
+        { $pull: { bookings: {email: e.email }} }
+      ) 
+      const t= await collection.findOne({email: e.email})
+     console.log("i am final",t)
+   res.json("deleted")
+})
 
 // Start the server
 app.listen(port, () => {

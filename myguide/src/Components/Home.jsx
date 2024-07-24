@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie'
-
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -46,6 +46,9 @@ const Home = () => {
 }
 
 const Header = () => {
+  const location = useLocation();
+  let { userdata } = location.state || {};
+  console.log(userdata," i am user")
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -75,15 +78,21 @@ const Header = () => {
     })
     .catch(err=>console.log("error logging out! ",err))
   }
+  const handleProfile=()=>{
+        console.log("user aka data",userdata)
+         navigate('/profile',{ state: { userdata: userdata } })
+   }
 
   return (
     <header className={`fixed top-0 left-0 w-full p-2 z-50 transition-colors duration-300 ${isScrolled ? 'bg-blue-500 opacity-80 shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-lg p-1 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">BookMyGuide</div>
+        <div className="text-white text-lg p-1 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] flex max-sm:font-normal"><svg className='w-6 h-6' viewBox="0 0 384 512">
+  <path fill="red" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+</svg>BookMyGuide</div>
         <nav className='items-center justify-center '>
           <ul className="flex space-x-2 text-white">
-            <li><a href="#home" className="hover:text-black hover:font-bold p-1 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] underline hover:bg-blue-100 rounded-lg ">Home</a></li>
-            <li><a href="#destinations" className="hover:text-black hover:font-bold font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]  hover:bg-blue-100 rounded-lg p-1">Destinations</a></li>
+            <li><p className="hover:text-black hover:font-bold p-1 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] underline hover:bg-blue-100 rounded-lg ">Home</p></li>
+            <li><button onClick={handleProfile} to="/profile" className="hover:text-black hover:font-bold font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]  hover:bg-blue-100 rounded-lg p-1">My Profile</button></li>
             <li><button className="justify-center rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]" onClick={handleLogout}>Logout</button></li>
           </ul>
         </nav>
@@ -93,9 +102,10 @@ const Header = () => {
 }
 
 const Hero = () => {
-
-
-  const [formData, setFormData] = useState({
+  const location = useLocation();
+  let { userdata } = location.state || {};
+  console.log(userdata," i am user hero")
+ const [formData, setFormData] = useState({
     location:""
   });
 
@@ -120,7 +130,7 @@ const Hero = () => {
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "dark", 
         });
     }
     else{
@@ -139,7 +149,7 @@ const Hero = () => {
           theme: "dark",
           });
       }else{
-      navigate('/searchresult',{ state: { results: res.data } })
+      navigate('/searchresult',{ state: { results: res.data , userdata:userdata} })
       console.log(res.data);}
     })
     .catch(err=>console.log("search m error",err))
@@ -206,12 +216,12 @@ const Footer = () => {
   return (
     <footer className="bg-blue-500 text-white py-6">
       <div className="container mx-auto text-center">
-        <p>&copy; 2024 BookMyGuide. All rights reserved.</p>
-        <nav className="flex justify-center space-x-4 mt-4">
-          <a href="#home" className="hover:underline">Home</a>
-          <a href="#destinations" className="hover:underline">Destinations</a>
-          <a href="#about" className="hover:underline">About Us</a>
-          <a href="#contact" className="hover:underline">Contact</a>
+      <p>&copy; 2024 BookMyGuide. All rights reserved.</p>
+        <p>Contact: support@bookmyguide.com</p>
+        <nav className="flex justify-center space-x-4 mt-2">
+        
+          <a href="https://www.linkedin.com/in/aditya-kunwar-809554201/" target="_blank" className="hover:underline">About</a>
+          
         </nav>
       </div>
     </footer>
