@@ -54,11 +54,10 @@ app.post('/login', async(req,res)=>{
                const token=jwt.sign({email: user.email},"jwt-token-secret-key",{expiresIn:'10m'})
                res.cookie('token', token,
                 {    
-                    samesite:none,
                     domain:undefined,
                     maxAge: 60 * 10 * 1000,
                     secure: process.env.NODE_ENV !== 'development',
-                    sameSite: 'lax'
+                    sameSite: 'none'
                 }
             ) //httpsOnly - true -js cannot access token
                //console.log(token)
