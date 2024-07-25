@@ -19,7 +19,8 @@ const Home = () => {
   //   var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
   //   return b ? b.pop() : "";
   // }
-  // let cookieValue = getCookie('Token')
+  //  let cookieValue = getCookie('Token')
+  //  console.log("yahan ", cookieValue)
   const navigate=useNavigate()
   
   useEffect(()=>{
@@ -27,7 +28,7 @@ const Home = () => {
     .then(res=>{
       console.log(res,"i am res")
       if(!res.data.valid){
-        console.log("mai hu dikkat")
+       // console.log("mai hu dikkat")
         navigate('/')
         
       }

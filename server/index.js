@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const dotenv=require('dotenv')
 
 
-const url='mongodb+srv://adityakunwar1527:JY3KlxBqWc7occtl@cluster0.w7fp17w.mongodb.net/'
+const url='mongodb+srv://adityakunwar1527:JY3KlxBqWc7occtl@cluster0.w7fp17w.mongodb.net'
 const client=new MongoClient(url)
 const dbname='passop';
 dotenv.config()
@@ -48,11 +48,19 @@ app.post('/login', async(req,res)=>{
     const collection=db.collection('documents')
     const finalresult= await collection.findOne({email: email})
     .then(user=>{
-        //console.log(user)
+        // console.log(user)
         if(user){
             if(user.password==password){
                const token=jwt.sign({email: user.email},"jwt-token-secret-key",{expiresIn:'10m'})
-               res.cookie('token',token,{httpOnly:true,maxAge:600000}) //httpsOnly - true -js cannot access token
+               res.cookie('token', token,
+                {
+                    httpOnly: true,
+                    maxAge: 60 * 10 * 1000,
+                    secure: process.env.NODE_ENV !== 'development',
+                    sameSite: 'lax'
+                }
+            ) //httpsOnly - true -js cannot access token
+               //console.log(token)
                return res.json({user})
               
             }else{
@@ -129,11 +137,14 @@ app.post('/guideregister', async (req, res) => {
 // middleware token user
 const varifyUser=(req,res,next)=>{
     const atoken=req.cookies.token;
+    console.log("i run")
     if(!atoken){
+      
       res.json("Expired Token")
     }else{
         jwt.verify(atoken,"jwt-token-secret-key",(err,decoded)=>{
             if(err){
+                
                 return res.json({valid: false, message:"Invalid Token"})
             }
             else{
