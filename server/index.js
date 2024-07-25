@@ -11,7 +11,7 @@ const client=new MongoClient(url)
 const dbname='passop';
 dotenv.config()
 const app=express()
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 // Middleware to parse JSON bodies
 app.use(express.json())
 app.use(cookieParser())
