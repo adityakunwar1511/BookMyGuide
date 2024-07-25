@@ -29,7 +29,7 @@ const Home = () => {
       console.log(res,"i am res")
       if(!res.data.valid){
        // console.log("mai hu dikkat")
-       // navigate('/')
+        navigate('/')
         
       }
      
