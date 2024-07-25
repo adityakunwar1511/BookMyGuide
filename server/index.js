@@ -143,9 +143,8 @@ const varifyUser=(req,res,next)=>{
       res.json("Expired Token")
     }else{
         jwt.verify(atoken,"jwt-token-secret-key",(err,decoded)=>{
-            if(err){
-                
-                return res.json({valid: false, message:"Invalid Token"})
+            if(err){                 
+            return res.json({valid: false, message:"Invalid Token"})
             }
             else{
                 req.email=decoded.email
