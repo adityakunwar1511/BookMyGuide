@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:["https://bookmyguide.netlify.app","http://localhost:5173"],
+    origin:true,
     credentials:true
 }))
 app.use(bodyparser.json());
@@ -54,7 +54,7 @@ app.post('/login', async(req,res)=>{
                const token=jwt.sign({email: user.email},"jwt-token-secret-key",{expiresIn:'10m'})
                res.cookie('token', token,
                 {
-                    httpOnly: true,
+                    domain:undefined,
                     maxAge: 60 * 10 * 1000,
                     secure: process.env.NODE_ENV !== 'development',
                     sameSite: 'lax'

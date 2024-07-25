@@ -22,9 +22,9 @@ const Home = () => {
   //  let cookieValue = getCookie('Token')
   //  console.log("yahan ", cookieValue)
   const navigate=useNavigate()
-  
+  axios.defaults.withCredentials=true;
   useEffect(()=>{
-    axios.get("https://bookmyguide.onrender.com/home")
+    axios.get("https://bookmyguide.onrender.com/home",{withCredentials:true})
     .then(res=>{
       console.log(res,"i am res")
       if(!res.data.valid){
@@ -35,7 +35,6 @@ const Home = () => {
      
     })
     .catch(err=>console.log(err))
-
   },[])
 
   return (
