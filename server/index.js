@@ -6,12 +6,13 @@ const jwt = require ('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const dotenv=require('dotenv')
 
-const url='mongodb://localhost:27017'
+
+const url='mongodb+srv://adityakunwar1527:JY3KlxBqWc7occtl@cluster0.w7fp17w.mongodb.net/'
 const client=new MongoClient(url)
 const dbname='passop';
 dotenv.config()
 const app=express()
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 // Middleware to parse JSON bodies
 app.use(express.json())
 app.use(cookieParser())
