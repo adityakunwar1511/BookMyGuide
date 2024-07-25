@@ -4,11 +4,14 @@ const bodyparser=require('body-parser')
 var cors = require('cors')
 const jwt = require ('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+const dotenv=require('dotenv')
+
 const url='mongodb://localhost:27017'
 const client=new MongoClient(url)
 const dbname='passop';
+dotenv.config()
 const app=express()
-const port = 3000;
+const port = process.env.PORT;
 // Middleware to parse JSON bodies
 app.use(express.json())
 app.use(cookieParser())
