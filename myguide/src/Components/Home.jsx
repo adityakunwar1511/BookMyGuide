@@ -25,8 +25,11 @@ const Home = () => {
   useEffect(()=>{
     axios.get("https://bookmyguide.onrender.com/home")
     .then(res=>{
+      console.log(res,"i am res")
       if(!res.data.valid){
+        console.log("mai hu dikkat")
         navigate('/')
+        
       }
      
     })
