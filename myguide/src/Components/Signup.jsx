@@ -22,7 +22,7 @@ const Signup = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     // Add your form submission logic here, such as sending data to a server
-    axios.post('http://localhost:3000/testing', formData)
+    axios.post('https://bookmyguide.onrender.com/testing', formData)
     .then((response) => {
       console.log(response.data);
       if(response.data=="already"){

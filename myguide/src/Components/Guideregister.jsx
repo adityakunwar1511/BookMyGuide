@@ -29,7 +29,7 @@ const Guideregister = () => {
     console.log('Data Registeted:', formData.location);
 
     // Add your form submission logic here, such as sending data to a server
-    axios.post('http://localhost:3000/guideregister', formData)
+    axios.post('https://bookmyguide.onrender.com/guideregister', formData)
     
     .then((response) => {
       console.log(response.data)

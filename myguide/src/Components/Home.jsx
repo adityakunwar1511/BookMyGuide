@@ -23,7 +23,7 @@ const Home = () => {
   const navigate=useNavigate()
   
   useEffect(()=>{
-    axios.get("http://localhost:3000/home")
+    axios.get("https://bookmyguide.onrender.com/home")
     .then(res=>{
       if(!res.data.valid){
         navigate('/')
@@ -70,7 +70,7 @@ const Header = () => {
   
   const handleLogout=()=>{
    // Cookies.remove('token');
-   axios.get("http://localhost:3000/logout")
+   axios.get("https://bookmyguide.onrender.com/logout")
     .then(res=>{
       if(res.data.status){
         navigate('/')
@@ -134,7 +134,7 @@ const Hero = () => {
         });
     }
     else{
-    axios.post("http://localhost:3000/search",formData)
+    axios.post("https://bookmyguide.onrender.com/search",formData)
     .then(res=>{
       console.log((res.data))
       if(res.data.length==0){

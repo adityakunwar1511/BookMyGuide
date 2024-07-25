@@ -24,7 +24,7 @@ const Myprofile = () => {
         profiledata=userdata  
     }
 
-    // axios.post('http://localhost:3000/updateuserdata',{useremail})
+    // axios.post('https://bookmyguide.onrender.com/updateuserdata',{useremail})
     // .then(res=>{
        
     //     updateddata=res.data;
@@ -37,7 +37,7 @@ const Myprofile = () => {
       }
       const handleLogout=()=>{
         // Cookies.remove('token');
-        axios.get("http://localhost:3000/logout")
+        axios.get("https://bookmyguide.onrender.com/logout")
          .then(res=>{
            if(res.data.status){
              navigate('/')
@@ -49,7 +49,7 @@ const Myprofile = () => {
        const handleDone=async(e)=>{
        // console.log(profiledata,"m yaha")
        setstate(true)
-        await axios.post("http://localhost:3000/delete",{e,profiledata})
+        await axios.post("https://bookmyguide.onrender.com/delete",{e,profiledata})
         .then(res=>{
             //console.log("responseradata",res.data)
             if(res.data=="deleted"){

@@ -34,7 +34,7 @@ const Navbar = () => {
         });
     }
     else{
-    axios.post("http://localhost:3000/search",formData)
+    axios.post("https://bookmyguide.onrender.com/search",formData)
     .then(res=>{
       navigate('/searchresult')
       console.log(res.data);

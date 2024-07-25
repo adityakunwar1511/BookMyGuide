@@ -53,7 +53,7 @@ const Searchresult = () => {
         });
     }
     else{
-    axios.post("http://localhost:3000/search",formData)
+    axios.post("https://bookmyguide.onrender.com/search",formData)
     .then(res=>{
      // temp=res.data;
     // console.log(res.data.length,"i am data res")
@@ -80,7 +80,7 @@ const Searchresult = () => {
   }
   const handleLogout=()=>{
     // Cookies.remove('token');
-    axios.get("http://localhost:3000/logout")
+    axios.get("https://bookmyguide.onrender.com/logout")
      .then(res=>{
        if(res.data.status){
          navigate('/')
@@ -99,7 +99,7 @@ const Searchresult = () => {
    const handleSelect=async(e)=>{
    console.log(userdata,"user and guide data",e,"date is",date) 
    
-    await axios.post("http://localhost:3000/book",{e,userdata,date})
+    await axios.post("https://bookmyguide.onrender.com/book",{e,userdata,date})
     .then(res=>{
         console.log("i am updated user data",res.data)
         navigate('/profile',{ state: { customerdata: res.data } })
