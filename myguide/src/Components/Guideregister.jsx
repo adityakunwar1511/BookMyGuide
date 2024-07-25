@@ -67,7 +67,7 @@ const Guideregister = () => {
       <h1 className="mt-2 text-center text-xl font-bold leading-9 tracking-tight text-gray-700">Guide Registration</h1>
       <form onSubmit={submitHandler} className="space-y-6">
         <div className="mb-3">
-          <label htmlFor="exampleInputName1" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
             Name
           </label>
           <input
@@ -80,7 +80,7 @@ const Guideregister = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email
           </label>
           <input
@@ -93,7 +93,7 @@ const Guideregister = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="password" className="form-label">
             Password
           </label>
           <input
