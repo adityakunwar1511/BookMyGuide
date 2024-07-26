@@ -76,7 +76,7 @@ const Header = () => {
   
   const handleLogout=()=>{
    // Cookies.remove('token');
-   axios.post("https://bookmyguide.onrender.com/logout")
+   axios.post("https://bookmyguide.onrender.com/logout",{userdata})
     .then(res=>{
       if(res.data.status){
         navigate('/')
