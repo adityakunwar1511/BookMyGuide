@@ -79,7 +79,7 @@ const Searchresult = () => {
     navigate('/home',{ state: { userdata: userdata } })
   }
   useEffect(()=>{
-    axios.post("http://localhost:3000/searchpageprotection",{userdata})
+    axios.post("https://bookmyguide.onrender.com/searchpageprotection",{userdata})
     .then(res=>{
       if(!res.data.valid){
         navigate('/')

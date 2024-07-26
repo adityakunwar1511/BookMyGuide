@@ -25,7 +25,7 @@ const Myprofile = () => {
     }
     
     useEffect(()=>{
-      axios.post("http://localhost:3000/profile",{profiledata})
+      axios.post("https://bookmyguide.onrender.com/profile",{profiledata})
       .then(res=>{
         if(!res.data.valid){
           navigate('/')
