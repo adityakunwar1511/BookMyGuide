@@ -14,7 +14,7 @@ import { useLocation } from 'react-router-dom';
 
 
 const Home = () => {
-  axios.defaults.withCredentials=true;
+ 
   // function getCookie(key) {
   //   var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
   //   return b ? b.pop() : "";
@@ -76,7 +76,7 @@ const Header = () => {
   
   const handleLogout=()=>{
    // Cookies.remove('token');
-   axios.get("https://bookmyguide.onrender.com/logout")
+   axios.post("https://bookmyguide.onrender.com/logout")
     .then(res=>{
       if(res.data.status){
         navigate('/')
