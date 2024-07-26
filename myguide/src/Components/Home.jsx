@@ -22,11 +22,14 @@ const Home = () => {
   //  let cookieValue = getCookie('Token')
   //  console.log("yahan ", cookieValue)
   const navigate=useNavigate()
+  const location = useLocation();
+  let { userdata } = location.state || {};
   axios.defaults.withCredentials=true;
   useEffect(()=>{
-    axios.get("https://bookmyguide.onrender.com/home",{withCredentials:true})
+    axios.post("https://bookmyguide.onrender.com/home",{userdata})
     .then(res=>{
       console.log(res,"i am res")
+     // console.log(localStorage.getItem('token'),"local")
       if(!res.data.valid){
        // console.log("mai hu dikkat")
         navigate('/')

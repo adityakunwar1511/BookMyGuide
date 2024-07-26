@@ -23,6 +23,18 @@ const Myprofile = () => {
     else{
         profiledata=userdata  
     }
+    
+    useEffect(()=>{
+      axios.post("http://localhost:3000/profile",{profiledata})
+      .then(res=>{
+        if(!res.data.valid){
+          navigate('/')
+        }
+       
+      })
+      .catch(err=>console.log(err))
+  
+    },[])
 
     // axios.post('https://bookmyguide.onrender.com/updateuserdata',{useremail})
     // .then(res=>{
@@ -37,7 +49,7 @@ const Myprofile = () => {
       }
       const handleLogout=()=>{
         // Cookies.remove('token');
-        axios.get("https://bookmyguide.onrender.com/logout")
+        axios.post("https://bookmyguide.onrender.com/logout",{profiledata})
          .then(res=>{
            if(res.data.status){
              navigate('/')

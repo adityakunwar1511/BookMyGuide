@@ -78,9 +78,20 @@ const Searchresult = () => {
   const handleBack=()=>{
     navigate('/home',{ state: { userdata: userdata } })
   }
+  useEffect(()=>{
+    axios.post("http://localhost:3000/searchpageprotection",{userdata})
+    .then(res=>{
+      if(!res.data.valid){
+        navigate('/')
+      }
+     
+    })
+    .catch(err=>console.log(err))
+
+  },[])
   const handleLogout=()=>{
     // Cookies.remove('token');
-    axios.get("https://bookmyguide.onrender.com/logout")
+    axios.post("https://bookmyguide.onrender.com/logout",{userdata})
      .then(res=>{
        if(res.data.status){
          navigate('/')

@@ -23,6 +23,7 @@ app.use(cors({
 app.use(bodyparser.json());
 
 client.connect()
+let tokenStorage = {};
 
 // Define a route for the root URL ("/")
 app.get('/', async (req, res) => {
@@ -51,15 +52,18 @@ app.post('/login', async(req,res)=>{
         // console.log(user)
         if(user){
             if(user.password==password){
-               const token=jwt.sign({email: user.email},"jwt-token-secret-key",{expiresIn:'10m'})
-               res.cookie('token', token,
-                {    
-                    domain:undefined,
-                    maxAge: 60 * 10 * 1000,
-                    secure: process.env.NODE_ENV !== 'development',
-                    sameSite: 'none'
-                }
-            ) //httpsOnly - true -js cannot access token
+               const token=jwt.sign({email: user.email},"jwt-token-secret-key",{expiresIn:'7d'});
+               tokenStorage[user.email] = token;
+               // localStorage.setItem('token',JSON.stringify(token));//
+            //    res.cookie('token', token,
+            //     {    
+            //         domain:undefined,
+            //         maxAge: 60 * 10 * 1000,
+            //         secure: process.env.NODE_ENV !== 'development',
+            //         sameSite: 'none'
+            //     }
+                
+            // ) //httpsOnly - true -js cannot access token
                //console.log(token)
                return res.json({user})
               
@@ -137,6 +141,8 @@ app.post('/guideregister', async (req, res) => {
 // middleware token user
 const varifyUser=(req,res,next)=>{
     const atoken=req.cookies.token;
+   // const atoken=localStorage.getItem('token');
+    console.log(atoken)
     console.log("i run")
     if(!atoken){
       
@@ -154,15 +160,70 @@ const varifyUser=(req,res,next)=>{
     }
 }
 
-app.get('/home',varifyUser,(req,res)=>{
+const check=(e)=>{
+    let atoken=tokenStorage[e];
+    if(atoken==null || atoken==undefined)
+    {
+       return "Expired Token";
+    }
+    else{
+       return "valid"
+    }
+   }
+
+
+
+app.post('/home',(req,res)=>{
+    const {userdata}=req.body
+  //  console.log(userdata.email)
+    let ret=check(userdata.email)
+    if(ret=="valid")
      res.json({valid:true, message:"authorized"})
+    else
+    res.json({valid: false, message:"Invalid Token"})
 })
 
-app.get('/logout',(req,res)=>{
-res.clearCookie('token');
-res.json({status:true})
-})
+app.post('/profile',(req,res)=>{
+    // console.log("hitt")
+     const {profiledata}=req.body
+     console.log(profiledata,"haa")
+     
+     let ret=check(profiledata.email)
+     if(ret=="valid")
+      res.json({valid:true, message:"authorized"})
+     else
+     res.json({valid: false, message:"Invalid Token"})
+ })
 
+ app.post('/logout',(req,res)=>{
+    //res.clearCookie('token');
+    const {userdata}=req.body
+    const {profiledata}=req.body
+    let data=null;
+    if(userdata==null || userdata==undefined){
+        data=profiledata;
+    }
+    else{
+        data=userdata
+    }
+    console.log(data.email,"hello email")
+    console.log(tokenStorage[data.email],"hello 1")
+    tokenStorage[data.email]=null;
+    console.log(tokenStorage[data.email],"hello 2")
+    res.json({status:true})
+    })
+    
+    app.post('/searchpageprotection',(req,res)=>{
+        const {userdata}=req.body
+        console.log(userdata,"haa")
+        
+        let ret=check(userdata.email)
+        if(ret=="valid")
+         res.json({valid:true, message:"authorized"})
+        else
+        res.json({valid: false, message:"Invalid Token"})
+    })
+    
 
 app.post('/book',async(req,res)=>{
     const data=req.body 
