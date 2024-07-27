@@ -17,13 +17,15 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const [isSubmitting,setisSubmitting]=useState(false)
   const submitHandler = (e) => {
     e.preventDefault();
+    setisSubmitting(true)
     console.log('Form submitted:', formData);
     // Add your form submission logic here, such as sending data to a server
     axios.post('https://bookmyguide.onrender.com/testing', formData)
     .then((response) => {
+      setisSubmitting(false)
       console.log(response.data);
       if(response.data=="already"){
         toast.warn('Already Registered email', {
@@ -68,7 +70,7 @@ const Signup = () => {
             name="name"
             value={formData.name}
             onChange={onChangeHandler}
-            type="text"
+            type="text" required
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
             
           />
@@ -81,7 +83,7 @@ const Signup = () => {
             name="email"
             value={formData.email}
             onChange={onChangeHandler}
-            type="email"
+            type="email" required
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
             
           />
@@ -94,14 +96,14 @@ const Signup = () => {
             name="password"
             value={formData.password}
             onChange={onChangeHandler}
-            type="password"
+            type="password" required
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
             
           />
         </div>
         <div className="d-grid col-6 mx-auto my-3">
-          <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Register
+          <button disabled={isSubmitting} type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          {isSubmitting ? 'Submitting...' : 'Register'}
           </button>
         </div>
       </form>

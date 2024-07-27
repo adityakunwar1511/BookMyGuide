@@ -11,7 +11,7 @@ const Login = () => {
     email: '',
     password: '',
   });
-
+ const [isSubmitting,setisSubmitting]=useState(false)
   
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -20,10 +20,12 @@ const Login = () => {
   axios.defaults.withCredentials=true; //token
   const submitHandler = (e) => {
     e.preventDefault();
+    setisSubmitting(true)
     console.log('Form submitted:', formData);
     // Add your form submission logic here, such as sending data to a server
     axios.post('https://bookmyguide.onrender.com/login', formData)
     .then((response) => {
+      setisSubmitting(false)
      // console.log(response.data.user,"response");
       if(response.data.user){
      
@@ -90,8 +92,8 @@ const Login = () => {
           />
         </div>
         <div className="d-grid col-6 mx-auto my-3">
-          <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Login
+          <button disabled={isSubmitting} type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          {isSubmitting ? 'Submitting...' : 'Login'}
           </button>
         </div>
       </form>

@@ -98,7 +98,7 @@ const Myprofile = () => {
    
     <div className="bg-white shadow-xl border-solid border-black rounded-lg p-6 mb-6">
         <h2 className="text-2xl font-semibold mb-4">My Profile</h2>
-        <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-4">
+        <div className="flex flex-col md:flex-row  items-start md:space-x-4">
            
             <div>
                 <h3 className="text-l  font-semibold">Name</h3>
