@@ -142,8 +142,8 @@ app.post('/guideregister', async (req, res) => {
 const varifyUser=(req,res,next)=>{
     const atoken=req.cookies.token;
    // const atoken=localStorage.getItem('token');
-    console.log(atoken)
-    console.log("i run")
+    // console.log(atoken)
+    // console.log("i run")
     if(!atoken){
       
       res.json("Expired Token")
@@ -186,7 +186,7 @@ app.post('/home',(req,res)=>{
 app.post('/profile',(req,res)=>{
     // console.log("hitt")
      const {profiledata}=req.body
-     console.log(profiledata,"haa")
+  //   console.log(profiledata,"haa")
      
      let ret=check(profiledata.email)
      if(ret=="valid")
@@ -206,16 +206,16 @@ app.post('/profile',(req,res)=>{
     else{
         data=userdata
     }
-    console.log(data.email,"hello email")
-    console.log(tokenStorage[data.email],"hello 1")
+   // console.log(data.email,"hello email")
+   // console.log(tokenStorage[data.email],"hello 1")
     tokenStorage[data.email]=null;
-    console.log(tokenStorage[data.email],"hello 2")
+   // console.log(tokenStorage[data.email],"hello 2")
     res.json({status:true})
     })
     
     app.post('/searchpageprotection',(req,res)=>{
         const {userdata}=req.body
-        console.log(userdata,"haa")
+      //  console.log(userdata,"haa")
         
         let ret=check(userdata.email)
         if(ret=="valid")
@@ -301,7 +301,7 @@ app.post('/delete',async(req,res)=>{
         { $pull: { bookings: {email: e.email }} }
       ) 
       const t= await collection.findOne({email: e.email})
-     console.log("i am final",t)
+    // console.log("i am final",t)
    res.json("deleted")
 })
 

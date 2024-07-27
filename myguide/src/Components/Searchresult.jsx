@@ -108,7 +108,7 @@ const Searchresult = () => {
    
   };
    const handleSelect=async(e)=>{
-   console.log(userdata,"user and guide data",e,"date is",date) 
+  // console.log(userdata,"user and guide data",e,"date is",date) 
    
     await axios.post("https://bookmyguide.onrender.com/book",{e,userdata,date})
     .then(res=>{
@@ -136,7 +136,7 @@ const Searchresult = () => {
       <input
         name="location"
         value={formData.location}
-        onChange={onChangeHandler} required
+        onChange={onChangeHandler} 
         type="location" placeholder=' Modify search '
         className=" w-[120%] md:w-[200%] rounded-md border-0 py-1.5 shadow-sm ring-1 opacity-80 ring-inset placeholder:text-cyan-900 focus:opacity-70 focus:text-blue-950  focus:ring-2 focus:ring-inset focus:ring-indigo-900 sm:text-sm sm:leading-6 p-2"
         

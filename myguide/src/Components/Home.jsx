@@ -28,7 +28,7 @@ const Home = () => {
   useEffect(()=>{
     axios.post("https://bookmyguide.onrender.com/home",{userdata})
     .then(res=>{
-      console.log(res,"i am res")
+   //   console.log(res,"i am res")
      // console.log(localStorage.getItem('token'),"local")
       if(!res.data.valid){
        // console.log("mai hu dikkat")
@@ -54,7 +54,7 @@ const Home = () => {
 const Header = () => {
   const location = useLocation();
   let { userdata } = location.state || {};
-  console.log(userdata," i am user")
+//  console.log(userdata," i am user")
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -85,7 +85,7 @@ const Header = () => {
     .catch(err=>console.log("error logging out! ",err))
   }
   const handleProfile=()=>{
-        console.log("user aka data",userdata)
+    //    console.log("user aka data",userdata)
          navigate('/profile',{ state: { userdata: userdata } })
    }
 
@@ -110,7 +110,7 @@ const Header = () => {
 const Hero = () => {
   const location = useLocation();
   let { userdata } = location.state || {};
-  console.log(userdata," i am user hero")
+ // console.log(userdata," i am user hero")
  const [formData, setFormData] = useState({
     location:""
   });
@@ -122,7 +122,7 @@ const Hero = () => {
   const navigate=useNavigate()
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+  //  console.log('Form submitted:', formData);
     {formData.location=formData.location.toUpperCase();
       formData.location=formData.location.trim();
     }
@@ -142,7 +142,7 @@ const Hero = () => {
     else{
     axios.post("https://bookmyguide.onrender.com/search",formData)
     .then(res=>{
-      console.log((res.data))
+   //   console.log((res.data))
       if(res.data.length==0){
         toast.warn('No guide found for your search!', {
           position: "top-center",
@@ -156,7 +156,8 @@ const Hero = () => {
           });
       }else{
       navigate('/searchresult',{ state: { results: res.data , userdata:userdata} })
-      console.log(res.data);}
+      //console.log(res.data);
+    }
     })
     .catch(err=>console.log("search m error",err))
     }

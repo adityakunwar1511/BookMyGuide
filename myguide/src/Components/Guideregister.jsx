@@ -27,7 +27,7 @@ const Guideregister = () => {
     {formData.location=formData.location.toUpperCase();
       formData.location=formData.location.trim();
     }
-    console.log('Data Registeted:', formData.location);
+   // console.log('Data Registeted:', formData.location);
 
     // Add your form submission logic here, such as sending data to a server
     axios.post('https://bookmyguide.onrender.com/guideregister', formData)

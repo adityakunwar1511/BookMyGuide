@@ -15,8 +15,8 @@ const Myprofile = () => {
     const [state,setstate]=useState(false);
     let {customerdata}=location.state || {};
     let { userdata } = location.state || {};
-    console.log("profile of in userdata",userdata)
-    console.log("i am customerdata",customerdata)
+  //  console.log("profile of in userdata",userdata)
+  //  console.log("i am customerdata",customerdata)
     if(userdata==undefined){
         profiledata=customerdata
     }
@@ -81,7 +81,7 @@ const Myprofile = () => {
       
   return (
    <>
-   {console.log("mai hu profiledata,",profiledata)}
+   
         <div className=" flex gap-2 justify-around p-1 max-sm:justify-center bg-blue-400 items-center">
     <svg type="submit" onClick={handleBack} className='bg-blue-700 hover:bg-indigo-400 p-1.5 absolute rounded-lg hover:cursor-pointer left-2' height="30px" viewBox="0 -960 960 960" width="30px" fill="#e8eaed"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
       <div className="text-white text-lg p-2 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] max-sm:font-normal flex"><svg className='w-6 h-6' viewBox="0 0 384 512">

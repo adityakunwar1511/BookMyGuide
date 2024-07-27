@@ -21,7 +21,7 @@ const Signup = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     setisSubmitting(true)
-    console.log('Form submitted:', formData);
+  //  console.log('Form submitted:', formData);
     // Add your form submission logic here, such as sending data to a server
     axios.post('https://bookmyguide.onrender.com/testing', formData)
     .then((response) => {
