@@ -97,7 +97,7 @@ const Header = () => {
 </svg>BookMyGuide</div>
         <nav className='items-center justify-center '>
           <ul className="flex space-x-2 text-white">
-            <li><p className=" hover:font-bold p-1 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] underline  rounded-lg ">Home</p></li>
+            <li><p className=" hover:font-bold p-1 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] underline rounded-lg ">Home</p></li>
             <li><button onClick={handleProfile} to="/profile" className="hover:text-black hover:font-bold font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]  hover:bg-blue-100 rounded-lg p-1">My Profile</button></li>
             <li><button className="justify-center rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]" onClick={handleLogout}>Logout</button></li>
           </ul>
