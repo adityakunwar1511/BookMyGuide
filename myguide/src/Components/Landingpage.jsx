@@ -48,7 +48,7 @@ const Header = () => {
 
   return (
     <header className={`fixed top-0 left-0 w-full p-2 z-50 transition-colors duration-300 ${isScrolled ? 'bg-blue-500 opacity-80 shadow-lg' : 'bg-transparent'}`}>
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-around items-center">
         <div className="text-white text-lg p-1 font-extrabold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] flex max-sm:font-normal"><svg className='w-6 h-6' viewBox="0 0 384 512">
   <path fill="red" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
 </svg>BookMyGuide</div>
