@@ -28,7 +28,7 @@ const Myprofile = () => {
       axios.post("https://bookmyguide.onrender.com/profile",{profiledata})
       .then(res=>{
         if(!res.data.valid){
-          navigate('/')
+          navigate('/login')
         }
        
       })
@@ -52,7 +52,7 @@ const Myprofile = () => {
         axios.post("https://bookmyguide.onrender.com/logout",{profiledata})
          .then(res=>{
            if(res.data.status){
-             navigate('/')
+             navigate('/login')
            } 
          })
          .catch(err=>console.log("error logging out! ",err))
@@ -89,7 +89,7 @@ const Myprofile = () => {
 </svg>BookMyGuide</div>
       <nav className='items-center flex justify-center '>
         <ul className="flex space-x-2 items-center text-white">
-          <li><p  className="hover:text-black underline hover:font-bold font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]  hover:bg-blue-100 rounded-lg p-1">My Profile</p></li>
+          <li><p  className=" underline hover:font-bold font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]   rounded-lg p-1">My Profile</p></li>
           <li><button className="justify-center rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]" onClick={handleLogout} >Logout</button></li>
         </ul>
       </nav>

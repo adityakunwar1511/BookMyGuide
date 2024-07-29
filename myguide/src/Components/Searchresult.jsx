@@ -41,16 +41,7 @@ const Searchresult = () => {
       formData.location=formData.location.trim();}
     
     if(formData.location==''){
-      toast.warn('Search location cannot be empty!', {
-        position: "top-center",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+   
     }
     else{
     axios.post("https://bookmyguide.onrender.com/search",formData)
@@ -82,7 +73,7 @@ const Searchresult = () => {
     axios.post("https://bookmyguide.onrender.com/searchpageprotection",{userdata})
     .then(res=>{
       if(!res.data.valid){
-        navigate('/')
+        navigate('/login')
       }
      
     })
@@ -94,7 +85,7 @@ const Searchresult = () => {
     axios.post("https://bookmyguide.onrender.com/logout",{userdata})
      .then(res=>{
        if(res.data.status){
-         navigate('/')
+         navigate('/login')
        } 
      })
      .catch(err=>console.log("error logging out! ",err))

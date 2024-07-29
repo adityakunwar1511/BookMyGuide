@@ -8,6 +8,7 @@ import Guideregister from './Components/Guideregister'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import Searchresult from './Components/Searchresult'
 import Myprofile from './Components/Myprofile'
+import Landingpage from './Components/Landingpage'
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
     <Routes>
       <Route path='/signup' element={<Signup/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
-      <Route path='/' element={<Login/>}></Route>
+      <Route path='/' element={<Landingpage/>}></Route>
       <Route path='/home' element={<Home/>}></Route>
       <Route path='/guideregister' element={<Guideregister/>}></Route>
       <Route path='/searchresult' element={<Searchresult/>}></Route>
