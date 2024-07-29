@@ -66,7 +66,7 @@ const Hero = () => {
   
   return (
     <section className="bg-cover bg-center h-screen text-blue-100 bg-[url('https://utfs.io/f/cd433943-6e40-4910-8f01-792a40ee2a05-1kh0af.jpeg')] "  >
-      <div className="container mx-auto h-full flex flex-col justify-center ">
+      <div className="container mx-auto  h-full flex flex-col justify-center ">
         <h1 className="text-3xl p-2 flex max-sm:flex-col gap-2 font-bold mb-4 ">Welcome to <span className='shadow-2xl flex items-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'> <svg className='w-8 h-8' viewBox="0 0 384 512">
   <path fill="red" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
 </svg>BookMyGuide</span></h1>
