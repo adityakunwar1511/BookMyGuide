@@ -26,9 +26,10 @@ const Home = () => {
   let { userdata } = location.state || {};
   axios.defaults.withCredentials=true;
   useEffect(()=>{
+    console.log(userdata)
     axios.post("https://bookmyguide.onrender.com/home",{userdata})
     .then(res=>{
-   //   console.log(res,"i am res")
+    //  console.log(res,"i am res")
      // console.log(localStorage.getItem('token'),"local")
       if(!res.data.valid){
        // console.log("mai hu dikkat")

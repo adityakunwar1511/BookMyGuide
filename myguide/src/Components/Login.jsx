@@ -1,9 +1,11 @@
 import React, { useRef } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ const Login = () => {
     axios.post('https://bookmyguide.onrender.com/login', formData)
     .then((response) => {
       setisSubmitting(false)
-     // console.log(response.data.user,"response");
+      //console.log(response.data.user,"response");
       if(response.data.user){
      
         navigate('/home',{ state: { userdata: response.data.user } })
@@ -50,6 +52,36 @@ const Login = () => {
       console.error('There was an error!', error);
     });
   };
+
+  const [ user, setUser ] = useState(null);
+  const [ profile, setProfile ] = useState(null);
+
+  const login = useGoogleLogin({
+      onSuccess: (codeResponse) => {
+        setUser(codeResponse)
+      },
+      onError: (error) => console.log('Login Failed:', error)
+  });
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .post('https://bookmyguide.onrender.com/api/get-profile', { access_token: user.access_token }) // Send token to backend
+        .then((res) => {
+          if(res.data.user){
+            navigate('/home',{ state: { userdata: res.data.user } })
+          }  
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user]);
+
+  // log out function to log the user out of google and set the profile array to null
+  const logOut = () => {
+      googleLogout();
+      setProfile(null);
+  };
+
   return (
     <div className='flex justify-center'>
           <div className="flex min-h-full flex-col justify-center p-4 items-center max-w-[300px] rounded-2xl px-6 mt-10 bg-slate-300">
@@ -98,10 +130,19 @@ const Login = () => {
         </div>
       </form>
 
-    <p className="mt-10 text-center text-m text-gray-500 px-5">
+    <div className="mt-10 text-center text-m text-gray-500 px-5">
       Don't have an account? 
       <Link to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 p-1">Create User Account</Link>
-    </p>
+      <div className='mt-1'>
+      <div className="flex items-center justify-center ">
+
+    <button  onClick={() => login()} className="flex items-center bg-white dark:bg-gray-500 border border-gray-300 rounded-lg shadow-md p-1 text-sm font-medium text-gray-400 dark:text-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+        <svg className="h-6 w-6 mr-2"  width="800px" height="800px" viewBox="-0.5 0 48 48" version="1.1"> <g id="Icons" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <g id="Color-" transform="translate(-401.000000, -860.000000)"> <g id="Google" transform="translate(401.000000, 860.000000)"> <path d="M9.82727273,24 C9.82727273,22.4757333 10.0804318,21.0144 10.5322727,19.6437333 L2.62345455,13.6042667 C1.08206818,16.7338667 0.213636364,20.2602667 0.213636364,24 C0.213636364,27.7365333 1.081,31.2608 2.62025,34.3882667 L10.5247955,28.3370667 C10.0772273,26.9728 9.82727273,25.5168 9.82727273,24" id="Fill-1" fill="#FBBC05"> </path> <path d="M23.7136364,10.1333333 C27.025,10.1333333 30.0159091,11.3066667 32.3659091,13.2266667 L39.2022727,6.4 C35.0363636,2.77333333 29.6954545,0.533333333 23.7136364,0.533333333 C14.4268636,0.533333333 6.44540909,5.84426667 2.62345455,13.6042667 L10.5322727,19.6437333 C12.3545909,14.112 17.5491591,10.1333333 23.7136364,10.1333333" id="Fill-2" fill="#EB4335"> </path> <path d="M23.7136364,37.8666667 C17.5491591,37.8666667 12.3545909,33.888 10.5322727,28.3562667 L2.62345455,34.3946667 C6.44540909,42.1557333 14.4268636,47.4666667 23.7136364,47.4666667 C29.4455,47.4666667 34.9177955,45.4314667 39.0249545,41.6181333 L31.5177727,35.8144 C29.3995682,37.1488 26.7323182,37.8666667 23.7136364,37.8666667" id="Fill-3" fill="#34A853"> </path> <path d="M46.1454545,24 C46.1454545,22.6133333 45.9318182,21.12 45.6113636,19.7333333 L23.7136364,19.7333333 L23.7136364,28.8 L36.3181818,28.8 C35.6879545,31.8912 33.9724545,34.2677333 31.5177727,35.8144 L39.0249545,41.6181333 C43.3393409,37.6138667 46.1454545,31.6490667 46.1454545,24" id="Fill-4" fill="#4285F4"> </path> </g> </g> </g> </svg>
+        <span>Login with Google</span>
+    </button>
+
+</div></div>
+    </div>
     <div className='flex my-2 items-center justify-center opacity-50'>OR</div>
     <p className="text-center text-m text-gray-500 px-5 ">
       Looking for Business? 

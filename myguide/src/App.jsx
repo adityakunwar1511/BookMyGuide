@@ -9,11 +9,12 @@ import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import Searchresult from './Components/Searchresult'
 import Myprofile from './Components/Myprofile'
 import Landingpage from './Components/Landingpage'
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 function App() {
 
   return (
-    <>
+    <GoogleOAuthProvider clientId='115308610268-jebuk9on6om7m88f6n7dku14qpafsc9i.apps.googleusercontent.com'>
     <BrowserRouter>
     <Routes>
       <Route path='/signup' element={<Signup/>}></Route>
@@ -26,7 +27,7 @@ function App() {
     </Routes>   
     </BrowserRouter>
    
-    </>
+    </GoogleOAuthProvider>
   )
 }
 
